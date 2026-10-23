@@ -1,0 +1,10 @@
+# .NET build output
+bin/
+obj/
+out/
+publish/
+*.user
+.vs/
+
+# Runtime config written next to the exe
+domecast.json
