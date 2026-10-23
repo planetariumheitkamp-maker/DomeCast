@@ -17,16 +17,16 @@ internal sealed class D3DContext : IDisposable
 #endif
         var levels = new[] { FeatureLevel.Level_11_1, FeatureLevel.Level_11_0 };
         var hr = D3D11.D3D11CreateDevice(
-            IntPtr.Zero, DriverType.Hardware, flags, levels, out ID3D11Device device);
-        if (hr.Failure)
+            IntPtr.Zero, DriverType.Hardware, flags, levels, out ID3D11Device? device);
+        if (hr.Failure || device is null)
         {
             // WARP fallback (no GPU available — e.g., RDP sessions)
             hr = D3D11.D3D11CreateDevice(
                 IntPtr.Zero, DriverType.Warp, flags, levels, out device);
         }
         hr.CheckError();
-        Device = device;
-        Context = device.ImmediateContext;
+        Device = device!;
+        Context = Device.ImmediateContext;
     }
 
     public void Dispose()
